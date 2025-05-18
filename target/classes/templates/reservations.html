@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Reservations – EasyAir</title>
+  <style>
+    body { text-align: center; background: #eef6fc; font-family: sans-serif; }
+    table { margin: 20px auto; border-collapse: collapse; width: 90%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background: #ddd; }
+    .btn { padding: 6px 12px; margin: 0; border: none; border-radius: 4px; cursor: pointer; }
+    .cancel { background: #dc3545; color: white; }
+    .logout { margin-top: 20px; }
+    .message { color: green; }
+    .error   { color: red; }
+  </style>
+</head>
+<body>
+<h1>My Reservations</h1>
+<p th:if="${message}"   class="message" th:text="${message}"></p>
+<p th:if="${error}"     class="error"   th:text="${error}"></p>
+
+<table>
+  <thead>
+  <tr>
+    <th>Ticket#</th><th>Flight#</th><th>Class</th>
+    <th>Seat</th><th>From→To</th><th>Purchased</th><th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="t : ${tickets}">
+    <td th:text="${t.ticket_num}"></td>
+    <td th:text="${t.flight_num}"></td>
+    <td th:text="${t.Uclass}"></td>
+    <td th:text="${t.seat_number}"></td>
+    <td>
+      <span th:text="${t.comingFrom}"></span> →
+      <span th:text="${t.goingTo}"></span>
+    </td>
+    <td th:text="${#temporals.format(t.purchase_time,'yyyy-MM-dd HH:mm')}"></td>
+    <td>
+      <form th:action="@{/reservations/cancel}" method="post" th:if="${t.Uclass=='Business' or t.Uclass=='First'}">
+        <input type="hidden" name="ticketNum" th:value="${t.ticket_num}"/>
+        <button type="submit" class="btn cancel">Cancel</button>
+      </form>
+      <span th:if="${t.Uclass=='Economy'}">— not cancellable —</span>
+    </td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(tickets)}">
+    <td colspan="7">You have no reservations.</td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="logout">
+  <a th:href="@{/logout}">Logout</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rep Dashboard – EasyAir</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef6fc;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      display: inline-block;
+      text-align: left;
+    }
+    li {
+      margin: 0.5rem 0;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      background: #007bff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    a:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h1>Welcome, <span th:text="${repName}">Rep Name</span></h1>
+
+<ul>
+  <li><a th:href="@{/rep/book-for}">Book Flight for Customer</a></li>
+  <li><a th:href="@{/rep/edit-reservation}">Edit Reservation</a></li>
+  <li><a th:href="@{/rep/aircraft/manage}">Manage Aircraft</a></li>
+  <li><a th:href="@{/rep/airport/manage}">Manage Airports</a></li>
+  <li><a th:href="@{/rep/flight/manage}">Manage Flights</a></li>
+  <li><a th:href="@{/rep/waitlist}">Waiting List</a></li>
+  <li><a th:href="@{/rep/flight/by-airport}">List Flights by Airport</a></li>
+  <li><a th:href="@{/rep/questions}">Reply to Questions</a></li>
+  <li><a th:href="@{/logout}">Logout</a></li>
+</ul>
+</body>
+</html>

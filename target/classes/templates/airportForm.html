@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${airport.airportId} != null
+        ? 'Edit Airport ' + ${airport.airportId}
+        : 'Add New Airport'">Airport Form</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    form { display: inline-block; background: white; padding: 1.5rem; border-radius: 8px; }
+    label { display: block; margin: 0.5rem 0 0.25rem; text-align: left; }
+    input { width: 100%; padding: 0.5rem; }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; }
+    a { display: block; margin-top: 1rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<h1 th:text="${airport.airportId} != null
+        ? 'Edit Airport ' + ${airport.airportId}
+        : 'Add New Airport'">Airport Form</h1>
+
+<form th:object="${airport}"
+      th:action="${airport.airportId} != null
+                 ? @{/rep/airport/edit}
+                 : @{/rep/airport/create}"
+      method="post">
+
+  <label>Airport ID:</label>
+  <input type="text" th:field="*{airportId}"
+         th:readonly="${airport.airportId} != null" required/>
+
+  <label>Airport Name:</label>
+  <input type="text" th:field="*{airportName}" required/>
+
+  <button type="submit"
+          th:text="${airport.airportId} != null
+                     ? 'Save Changes'
+                     : 'Create Airport'">
+    Submit
+  </button>
+</form>
+
+<a th:href="@{/rep/airport/manage}">Back to Airport List</a>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${user.userID} != 0
+                   ? 'Edit User #' + ${user.userID}
+                   : 'Add New User'">
+    User Form
+  </title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    form { display: inline-block; background: white; padding: 1.5rem; border-radius: 8px; text-align: left; }
+    label { display: block; margin: .5rem 0 .2rem; }
+    input, select { width: 100%; padding: .5rem; }
+    button { margin-top: 1rem; padding: .5rem 1rem; }
+    a { display: block; margin-top: 1rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<h1 th:text="${user.userID} != 0
+                ? 'Edit User #' + ${user.userID}
+                : 'Add New User'">
+  User Form
+</h1>
+
+<form th:object="${user}"
+      th:action="${user.userID} != 0
+                     ? @{/admin/users/edit}
+                     : @{/admin/users/create}"
+      method="post">
+
+  <input type="hidden" th:if="${user.userID} != 0" th:field="*{userID}" />
+  <input type="hidden" th:if="${user.userID} != 0" th:field="*{password}" />
+  <label>Username</label>
+  <input type="text" th:field="*{username}" required/>
+  <label th:if="${user.userID} == 0">Password</label>
+  <input type="password"
+         th:if="${user.userID} == 0"
+         th:field="*{password}"
+         placeholder="set a password"
+         required/>
+
+  <label>First Name</label>
+  <input type="text" th:field="*{fname}" required/>
+
+  <label>Last Name</label>
+  <input type="text" th:field="*{lname}" required/>
+
+  <label>Email</label>
+  <input type="email" th:field="*{email}" required/>
+
+  <label>Phone</label>
+  <input type="text" th:field="*{phoneNum}" required/>
+
+  <label>
+    <input type="checkbox" th:field="*{rep}" /> Customer Rep
+  </label>
+
+  <label>
+    <input type="checkbox" th:field="*{admin}" /> Administrator
+  </label>
+
+  <button type="submit"
+          th:text="${user.userID} != 0 ? 'Save Changes' : 'Create User'">
+    Submit
+  </button>
+</form>
+
+<a th:href="@{/admin/users}">Back to User List</a>
+</body>
+</html>

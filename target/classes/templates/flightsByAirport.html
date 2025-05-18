@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Flights by Airport – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; text-align: center; padding: 2rem; }
+    form, table { background: white; border-radius: 8px; margin: 1rem auto; padding: 1rem; }
+    select, button { padding: .5rem; margin-left: .5rem; }
+    table { width: 90%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: .5rem; }
+    th { background: #ddd; }
+    h2 { margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+<h1>Flights by Airport</h1>
+
+<form th:action="@{/rep/flight/by-airport}" method="get">
+  <label for="airport">Choose airport:</label>
+  <select id="airport" name="airportId">
+    <option th:each="a : ${airports}"
+            th:value="${a.airportId}"
+            th:text="${a.airportName + ' (' + a.airportId + ')'}"
+            th:selected="${a.airportId == selectedAirport}">
+    </option>
+  </select>
+  <button type="submit">Go</button>
+</form>
+
+<h2>Departing from <span th:text="${selectedAirport}">XXX</span></h2>
+<table>
+  <tr>
+    <th>Flight#</th><th>Depart</th><th>Arrive</th><th>Origin</th><th>Dest</th><th>Price</th>
+  </tr>
+  <tr th:each="f : ${departingFlights}">
+    <td th:text="${f.flightNum}"></td>
+    <td th:text="${#temporals.format(f.departTime,'yyyy-MM-dd HH:mm')}"></td>
+    <td th:text="${#temporals.format(f.arrivalTime,'yyyy-MM-dd HH:mm')}"></td>
+    <td th:text="${f.origin}"></td>
+    <td th:text="${f.destination}"></td>
+    <td th:text="${f.price}"></td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(departingFlights)}">
+    <td colspan="6">No departing flights.</td>
+  </tr>
+</table>
+
+<h2>Arriving into <span th:text="${selectedAirport}">XXX</span></h2>
+<table>
+  <tr>
+    <th>Flight#</th><th>Depart</th><th>Arrive</th><th>Origin</th><th>Dest</th><th>Price</th>
+  </tr>
+  <tr th:each="f : ${arrivingFlights}">
+    <td th:text="${f.flightNum}"></td>
+    <td th:text="${#temporals.format(f.departTime,'yyyy-MM-dd HH:mm')}"></td>
+    <td th:text="${#temporals.format(f.arrivalTime,'yyyy-MM-dd HH:mm')}"></td>
+    <td th:text="${f.origin}"></td>
+    <td th:text="${f.destination}"></td>
+    <td th:text="${f.price}"></td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(arrivingFlights)}">
+    <td colspan="6">No arriving flights.</td>
+  </tr>
+</table>
+
+<p><a th:href="@{/rep/repPage}">Back to Dashboard</a></p>
+</body>
+</html>

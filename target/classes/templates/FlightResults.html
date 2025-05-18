@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results – EasyAir</title>
+    <style>
+        body { text-align: center; background-color: #eef6fc; font-family: sans-serif; }
+        table { margin: 0 auto; border-collapse: collapse; }
+        th, td { padding: 8px 12px; border: 1px solid #ccc; }
+        h2 { margin-top: 1.5em; }
+        .submit-btn { margin-top: 20px; padding: 10px 20px; font-size: 1rem; }
+    </style>
+</head>
+<body>
+<h1>Flights: <span th:text="${flightType}"/></h1>
+<p>
+    From <strong th:text="${origin}"/>
+    to   <strong th:text="${destination}"/>
+</p>
+<div class="sort-form">
+    <form th:action="@{/flights/search}" method="post">
+        <input type="hidden" name="flightType" th:value="${flightType}"/>
+        <input type="hidden" name="origin"     th:value="${origin}"/>
+        <input type="hidden" name="destination"th:value="${destination}"/>
+        <input type="hidden" name="flightClass"th:value="${flightClass}"/>
+        <label>Sort by:</label>
+        <select name="sortBy">
+            <option value="price"       th:selected="${sortBy=='price'}">Price</option>
+            <option value="departTime"  th:selected="${sortBy=='departTime'}">Departure</option>
+            <option value="arrivalTime" th:selected="${sortBy=='arrivalTime'}">Arrival</option>
+            <option value="duration"    th:selected="${sortBy=='duration'}">Duration</option>
+        </select>
+
+        <label>Order:</label>
+        <select name="sortDir">
+            <option value="asc"  th:selected="${sortDir=='asc'}">Ascending</option>
+            <option value="desc" th:selected="${sortDir=='desc'}">Descending</option>
+        </select>
+
+        <button type="submit">Apply</button>
+    </form>
+</div>
+
+<form th:action="@{/tickets/book}" method="post">
+    <input type="hidden" name="flightType" th:value="${flightType}"/>
+    <input type="hidden" name="flightClass" th:value="${flightClass}"/>
+    <div th:if="${flightType == 'oneway'}">
+        <h2>Available Flights</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Flight#</th>
+                <th>Depart</th>
+                <th>Arrive</th>
+                <th>Duration</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${outboundFlights}">
+                <td>
+                    <input type="radio" name="outboundFlightNum"
+                           th:value="${f.flightNum}" required/>
+                </td>
+                <td th:text="${f.flightNum}">FL123</td>
+                <td th:text="${#temporals.format(f.arrivalTime,'yyyy-MM-dd HH:mm')}">10:00</td>
+                <td th:text="${#temporals.format(f.departTime,'yyyy-MM-dd HH:mm')}">14:00</td>
+                <td th:text="${f.airtime} + ' hrs'">4 hrs</td>
+                <td th:text="'$ ' + ${f.price}">199.99</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${flightType == 'roundtrip'}">
+        <h2>Outbound Flights</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Flight#</th>
+                <th>Depart</th>
+                <th>Arrive</th>
+                <th>Duration</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${outboundFlights}">
+                <td>
+                    <input type="radio" name="outboundFlightNum"
+                           th:value="${f.flightNum}" required/>
+                </td>
+                <td th:text="${f.flightNum}"></td>
+                <td th:text="${#temporals.format(f.arrivalTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(f.departTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${f.airtime} + ' hrs'"></td>
+                <td th:text="'$ ' + ${f.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>Return Flights</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Flight#</th>
+                <th>Depart</th>
+                <th>Arrive</th>
+                <th>Duration</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${returnFlights}">
+                <td>
+                    <input type="radio" name="returnFlightNum"
+                           th:value="${f.flightNum}" required/>
+                </td>
+                <td th:text="${f.flightNum}"></td>
+                <td th:text="${#temporals.format(f.arrivalTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(f.departTime,'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${f.airtime} + ' hrs'"></td>
+                <td th:text="'$ ' + ${f.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit" class="submit-btn"
+            th:text="${flightType=='roundtrip'} ? 'Book Round-Trip' : 'Book Flight'">
+        Book
+    </button>
+</form>
+</body>
+</html>

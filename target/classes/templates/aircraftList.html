@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Manage Aircraft – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; text-align: center; padding: 2rem; }
+    table { margin: auto; border-collapse: collapse; width: 80%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background: #ddd; }
+    a.button {
+      display: inline-block; margin: 1rem; padding: .5rem 1rem;
+      background: #007bff; color: white; text-decoration: none; border-radius: 4px;
+    }
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+<h1>Aircraft Fleet</h1>
+
+<div>
+  <a th:href="@{/rep/repPage}" class="button">← Dashboard</a>
+  <a th:href="@{/rep/aircraft/create}" class="button">Add New Aircraft</a>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Craft #</th>
+    <th>Seats</th>
+    <th>Airline ID</th>
+    <th>Operation Days</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="a : ${aircrafts}">
+    <td th:text="${a.craftNum}">CR123</td>
+    <td th:text="${a.seats}">180</td>
+    <td th:text="${a.airlineID}">AA</td>
+    <td th:text="${a.operationDays}">Mon,Wed,Fri</td>
+    <td>
+      <a th:href="@{/rep/aircraft/edit(craftNum=${a.craftNum})}"
+         class="button">Edit</a>
+    </td>
+    <td>
+      <a th:href="@{/rep/aircraft/delete(craftNum=${a.craftNum})}"
+         class="button"
+         onclick="return confirm('Delete aircraft [[${a.craftNum}]]?');">Delete</a>
+    </td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(aircrafts)}">
+    <td colspan="6">No aircraft registered yet.</td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

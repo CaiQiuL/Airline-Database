@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Booking Result – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #eef6fc; text-align: center; }
+    .ticket { display: inline-block; text-align: left; margin: 1rem; padding: 1rem; background: #fff; border-radius: 8px; }
+    h1 { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+<h1>Flight(s) Booked for Customer</h1>
+<div th:each="t : ${tickets}" class="ticket">
+  <p><strong>Ticket #:</strong> <span th:text="${t.ticket_num}"/></p>
+  <p><strong>Flight #:</strong> <span th:text="${t.flight_num}"/></p>
+  <p><strong>Class:</strong>   <span th:text="${t.Uclass}"/></p>
+  <p><strong>Seat:</strong>    <span th:text="${t.seat_number}"/></p>
+  <p><strong>Fare:</strong>    $<span th:text="${t.total}"/></p>
+</div>
+<p><a th:href="@{/rep/repPage}">Back to Dashboard</a></p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Waiting List – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; text-align: center; padding: 2rem; }
+    form { margin-bottom: 2rem; }
+    input { padding: .5rem; width: 200px; }
+    button { padding: .5rem 1rem; }
+    table { margin: auto; border-collapse: collapse; width: 80%; }
+    th, td { padding: .75rem 1.5rem; border: 1px solid #ccc; }
+    th { background: #ddd; }
+    .no-data { color: #666; margin-top: 1rem; }
+    a { display: inline-block; margin-top: 2rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<h1>Waiting List</h1>
+
+<form th:action="@{/rep/waitlist}" method="get">
+  <label>
+    Flight #:
+    <input type="text" name="flightNum"
+           th:value="${flightNum}" placeholder="e.g. AB123" required/>
+  </label>
+  <button type="submit">Filter</button>
+</form>
+<div th:if="${entries != null}">
+  <table th:if="${!#lists.isEmpty(entries)}">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>User ID</th>
+      <th>Flight #</th>
+      <th>Requested At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="w, iterStat : ${entries}">
+      <td th:text="${iterStat.count}">1</td>
+      <td th:text="${w.userID}">42</td>
+      <td th:text="${w.flight_num}">AB123</td>
+      <td th:text="${#temporals.format(w.timestamp,'yyyy-MM-dd HH:mm')}">
+        2025-05-09 15:30
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <p class="no-data" th:if="${#lists.isEmpty(entries)}">
+    No one is on the wait list for flight <strong th:text="${flightNum}">—</strong>.
+  </p>
+</div>
+
+<a th:href="@{/rep/repPage}">Back to Dashboard</a>
+</body>
+</html>

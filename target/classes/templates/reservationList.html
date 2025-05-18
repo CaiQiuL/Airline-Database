@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Reservations Report – EasyAir Admin</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    form { margin-bottom: 1.5rem; }
+    input { padding: .5rem; margin: 0 .25rem; }
+    button { padding: .5rem 1rem; }
+    table { margin: auto; border-collapse: collapse; width: 90%; }
+    th, td { border: 1px solid #ccc; padding: .5rem .75rem; }
+    th { background: #ddd; }
+    a.button { display: inline-block; margin-top: 1rem; padding: .5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px;}
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+<h1>Reservations Report</h1>
+
+<form th:action="@{/admin/reservations}" method="get">
+  <label>Flight #:
+    <input type="text" name="flightNum" th:value="${flightNum}"/>
+  </label>
+  <label>or Customer:
+    <input type="text" name="customerName" th:value="${customerName}"/>
+  </label>
+  <button type="submit">Search</button>
+</form>
+
+<table th:if="${tickets != null}">
+  <thead>
+  <tr>
+    <th>Ticket #</th>
+    <th>Flight #</th>
+    <th>Passenger</th>
+    <th>Class</th>
+    <th>Seat</th>
+    <th>Fare</th>
+    <th>Booked At</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="t : ${tickets}">
+    <td th:text="${t.ticket_num}">123</td>
+    <td th:text="${t.flight_num}">AA100</td>
+    <td th:text="${t.goingTo}">John Doe</td>
+    <td th:text="${t.Uclass}">Economy</td>
+    <td th:text="${t.seat_number}">12A</td>
+    <td th:text="${t.total}">299.99</td>
+    <td th:text="${#temporals.format(t.purchase_time,'yyyy-MM-dd HH:mm')}">
+      2025-05-10 11:00
+    </td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(tickets)}">
+    <td colspan="7">No reservations found.</td>
+  </tr>
+  </tbody>
+</table>
+
+<p><a th:href="@{/admin} " class="button">← Back to Admin Dashboard</a></p>
+</body>
+</html>

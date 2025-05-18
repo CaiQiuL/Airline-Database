@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Revenue Report Result – EasyAir Admin</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    .result { display: inline-block; background: white; padding: 1.5rem; border-radius: 8px; }
+    a { display: block; margin-top: 1rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<h1>Revenue Report</h1>
+<div class="result">
+  <p>
+    <strong>Type:</strong> <span th:text="${reportType}"/> <br/>
+    <strong>Identifier:</strong> <span th:text="${identifier}"/> <br/>
+    <strong>Total Revenue:</strong> $
+    <span th:text="${revenue}">0.00</span>
+  </p>
+</div>
+<a th:href="@{/admin/reports/revenue}">New Report</a>
+<a th:href="@{/admin}">Back to Admin Dashboard</a>
+</body>
+</html>
