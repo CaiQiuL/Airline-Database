@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="'Reply to Question #' + ${question.messageID}">Reply</title>
+  <style>
+    body { text-align:center; font-family:sans-serif; background:#eef6fc; padding:2rem; }
+    .form-container {
+      background:white; display:inline-block; padding:2rem;
+      border-radius:8px; text-align:left;
+    }
+    label { display:block; margin:.5rem 0 .2rem; }
+    textarea { width:100%; height:100px; padding:.5rem; }
+    button { margin-top:1rem; padding:.5rem 1rem; }
+    a { display:inline-block; margin-top:1rem; color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+<h1 th:text="'Reply to Question #' + ${question.messageID}">Reply Form</h1>
+<div class="form-container">
+  <p><strong>Customer ID:</strong> <span th:text="${question.customerID}">42</span></p>
+  <p><strong>Q:</strong> <span th:text="${question.question}">…</span></p>
+  <form th:action="@{/rep/questions/reply}" method="post">
+    <input type="hidden" name="messageID" th:value="${question.messageID}"/>
+    <label>Your Answer:</label>
+    <textarea name="answer" required th:text="${question.answer}"></textarea>
+    <button type="submit">Save Answer</button>
+  </form>
+  <a th:href="@{/rep/questions}">Back to Questions List</a>
+</div>
+</body>
+</html>

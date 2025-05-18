@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Manage Airports – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    table { margin: auto; border-collapse: collapse; width: 50%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background: #ddd; }
+    a.button { margin: 0.5rem; padding: 0.5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+<h1>Airport Directory</h1>
+
+<div>
+  <a th:href="@{/rep/repPage}" class="button">Dashboard</a>
+  <a th:href="@{/rep/airport/create}" class="button">Add Airport</a>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th><th>Name</th><th>Edit</th><th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="a : ${airports}">
+    <td th:text="${a.airportId}">AP01</td>
+    <td th:text="${a.airportName}">Example Airport</td>
+    <td>
+      <a th:href="@{/rep/airport/edit(airportId=${a.airportId})}" class="button">Edit</a>
+    </td>
+    <td>
+      <a th:href="@{/rep/airport/delete(airportId=${a.airportId})}"
+         class="button"
+         onclick="return confirm('Delete [[${a.airportId}]]?');">Delete</a>
+    </td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(airports)}">
+    <td colspan="4">No airports created.</td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

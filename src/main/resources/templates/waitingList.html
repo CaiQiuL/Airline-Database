@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Waitlisted Flights – EasyAir</title>
+    <style>
+        body { text-align: center; background: #eef6fc; font-family: sans-serif; }
+        h1 { margin-top: 1.5em; }
+        table { margin: 20px auto; border-collapse: collapse; width: 90%; }
+        th, td { padding: 8px 12px; border: 1px solid #ccc; }
+        th { background: #ddd; }
+        .logout { margin-top: 20px; display: inline-block; padding: 8px 16px; background: #007bff; color: #fff; text-decoration: none; border-radius: 4px;}
+    </style>
+</head>
+<body>
+<h1>My Waitlisted Flights</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Flight #</th>
+        <th>Requested At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="w : ${waitingList}">
+        <td th:text="${w.waitlist_id}">1</td>
+        <td th:text="${w.flight_num}">AA123</td>
+        <td th:text="${#temporals.format(w.timestamp,'yyyy-MM-dd HH:mm')}">
+            2025-05-08 15:45
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(waitingList)}">
+        <td colspan="3">You are not waitlisted for any flights.</td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/logout}" class="logout">Logout</a>
+</body>
+</html>

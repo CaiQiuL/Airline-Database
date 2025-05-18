@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Book Flight for Customer – EasyAir</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #eef6fc; }
+    form { max-width: 400px; margin: auto; }
+    label { display: block; margin: .5rem 0; }
+    input, select { width: 100%; padding: .5rem; }
+    button { margin-top: 1rem; padding: .5rem 1rem; }
+  </style>
+</head>
+<body>
+<h1>Book Flight for Customer</h1>
+<form th:action="@{/rep/book-for}" method="post">
+  <label>
+    Customer ID:
+    <input type="number" name="customerId" required/>
+  </label>
+  <label>
+    Flight Type:
+    <select name="flightType">
+      <option value="oneway">One-way</option>
+      <option value="roundtrip">Round-trip</option>
+    </select>
+  </label>
+  <label>
+    Outbound Flight #:
+    <input type="text" name="outboundFlightNum" required/>
+  </label>
+  <label>
+    Return Flight # (if round-trip):
+    <input type="text" name="returnFlightNum"/>
+  </label>
+  <label>
+    Class:
+    <select name="flightClass">
+      <option value="Economy">Economy</option>
+      <option value="Business">Business</option>
+      <option value="First">First</option>
+    </select>
+  </label>
+  <button type="submit">Book</button>
+</form>
+<p><a th:href="@{/rep/repPage}">Back to Dashboard</a></p>
+</body>
+</html>

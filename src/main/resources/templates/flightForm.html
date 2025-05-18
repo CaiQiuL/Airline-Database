@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${flight.flightNum} != null
+                   ? 'Edit Flight #' + ${flight.flightNum}
+                   : 'Add New Flight'">
+    Flight Form
+  </title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; text-align: center; padding: 2rem; }
+    form { background: white; display: inline-block; padding: 1.5rem; border-radius: 8px; text-align: left; }
+    label { display: block; margin: .5rem 0 .2rem; }
+    input, select { width: 100%; padding: .5rem; }
+    button { margin-top: 1rem; padding: .5rem 1rem; }
+    a { display: inline-block; margin-top: 1rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<h1 th:text="${flight.flightNum} != null
+              ? 'Edit Flight #' + ${flight.flightNum}
+              : 'Add New Flight'">
+  Flight Form
+</h1>
+
+<form th:object="${flight}"
+      th:action="${flight.flightNum} != null
+                   ? @{/rep/flight/edit}
+                   : @{/rep/flight/create}"
+      method="post">
+
+  <label>Flight #</label>
+  <input type="text" th:field="*{flightNum}"
+         th:readonly="${flight.flightNum} != null" required/>
+
+  <label>Domestic?</label>
+  <select th:field="*{isDomestic}">
+    <option th:value="true">Yes</option>
+    <option th:value="false">No</option>
+  </select>
+
+  <label>Departure</label>
+  <input type="datetime-local"
+         th:field="*{departTime}"
+         required/>
+
+  <label>Arrival</label>
+  <input type="datetime-local"
+         th:field="*{arrivalTime}"
+         required/>
+
+  <label>Origin</label>
+  <input type="text" th:field="*{origin}" required/>
+
+  <label>Destination</label>
+  <input type="text" th:field="*{destination}" required/>
+
+  <label>Stops</label>
+  <input type="number" th:field="*{numStops}" hours="0" required/>
+
+  <label>Airline ID</label>
+  <input type="text" th:field="*{airlineID}" required/>
+
+  <label>Craft #</label>
+  <input type="text" th:field="*{craftNum}" required/>
+
+  <label>Departure Airport</label>
+  <input type="text" th:field="*{airportId}" required/>
+
+  <label>Destination Airport</label>
+  <input type="text" th:field="*{airportIdDest}" required/>
+
+  <label>Flight Time (hours)</label>
+  <input type="number" th:field="*{airtime}" min="0" readonly/>
+
+  <label>Price</label>
+  <input type="number" step="0.01" th:field="*{price}" min="0" required/>
+
+  <button type="submit"
+          th:text="${flight.flightNum} != null
+                     ? 'Save Changes'
+                     : 'Create Flight'">
+    Submit
+  </button>
+</form>
+
+<a th:href="@{/rep/flight/manage}">Back to Flight List</a>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Revenue Report – EasyAir Admin</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; padding: 2rem; text-align: center; }
+    form { display: inline-block; background: white; padding: 1.5rem; border-radius: 8px; text-align: left; }
+    label { display: block; margin: .5rem 0 .2rem; }
+    select, input { width: 100%; padding: .5rem; }
+    button { margin-top: 1rem; padding: .5rem 1rem; }
+    a { display: block; margin-top: 1rem; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<h1>Generate Revenue Report</h1>
+<form th:action="@{/admin/reports/revenue}" method="post">
+  <label>Report By:</label>
+  <select name="reportType">
+    <option value="flight">Flight Number</option>
+    <option value="airline">Airline ID</option>
+    <option value="customer">Customer ID</option>
+  </select>
+  <label>Identifier</label>
+  <input type="text" name="identifier"
+         placeholder="Enter flight #, airline ID, or customer ID"
+         required/>
+  <button type="submit">Run Report</button>
+</form>
+<a th:href="@{/admin}">Back to Admin Dashboard</a>
+</body>
+</html>

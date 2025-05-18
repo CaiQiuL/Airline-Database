@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Questions – EasyAir</title>
+  <style>
+    body { text-align: center; background: #eef6fc; font-family: sans-serif; }
+    table { margin: 20px auto; border-collapse: collapse; width: 90%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background: #ddd; }
+    .ask-form { margin: 20px auto; width: 90%; text-align: left; background: #fff; padding: 15px; border-radius: 8px; }
+    .ask-form textarea { width: 100%; height: 80px; }
+    .ask-form button { margin-top: 10px; padding: 8px 16px; }
+    .logout { margin-top: 20px; }
+  </style>
+</head>
+<body>
+<h1>All Questions &amp; Answers</h1>
+
+<div class="ask-form">
+  <form th:action="@{/questions}" method="get">
+    <label>Filter by Question ID:</label>
+    <input type="number" name="messageID"
+           th:value="${filterId}" placeholder="e.g. 123"/>
+    <button type="submit">Search</button>
+    <a th:href="@{/questions}">Clear</a>
+  </form>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Customer</th>
+    <th>Asked</th>
+    <th>Question</th>
+    <th>Answer</th>
+    <th>Answered By</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="q : ${questions}">
+    <td th:text="${q.messageID}">123</td>
+    <td th:text="${q.customerID}">42</td>
+    <td th:text="${#temporals.format(q.timestamp,'yyyy-MM-dd HH:mm')}">2025-05-07 14:30</td>
+    <td th:text="${q.question}">When is my flight?</td>
+    <td th:text="${q.answer != null ? q.answer : '— awaiting answer —'}">Your flight…</td>
+    <td th:text="${q.repID != 0 ? q.repID : '-'}">7</td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(questions)}">
+    <td colspan="6">No questions in the system.</td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="ask-form">
+  <form th:action="@{/questions}" method="post">
+    <label for="questionText">Ask a new question:</label><br/>
+    <textarea id="questionText" name="questionText" required></textarea><br/>
+    <button type="submit">Submit Question</button>
+  </form>
+</div>
+
+<div class="logout">
+  <a th:href="@{/logout}">Logout</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Booking Confirmation – EasyAir</title>
+  <style>
+    body { text-align: center; background-color: #eef6fc; font-family: sans-serif; }
+    .ticket { margin: 20px auto; padding: 15px; background: #fff; border-radius: 8px; width: 60%; text-align: left; }
+    .ticket h2 { margin-top: 0; }
+    .ticket p { margin: 5px 0; }
+    .actions { margin-top: 20px; }
+    .actions a, .actions button { margin: 0 10px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<h1>Booking Confirmation</h1>
+
+<div th:if="${outTicket != null}" class="ticket">
+  <h2>Outbound Ticket</h2>
+  <p><strong>Ticket #:</strong> <span th:text="${outTicket.ticket_num}"></span></p>
+  <p><strong>Flight #:</strong> <span th:text="${outTicket.flight_num}"></span></p>
+  <p><strong>Class:</strong> <span th:text="${outTicket.Uclass}"></span></p>
+  <p><strong>Seat #:</strong> <span th:text="${outTicket.seat_number}"></span></p>
+  <p><strong>From:</strong> <span th:text="${outTicket.goingTo}"></span></p>
+  <p><strong>To:</strong> <span th:text="${outTicket.comingFrom}"></span></p>
+  <p><strong>Booking Fee:</strong> $<span th:text="${outTicket.bookingFee}"></span></p>
+  <p><strong>Total Fare:</strong> $<span th:text="${outTicket.total}"></span></p>
+  <p><strong>Purchased:</strong> <span th:text="${#temporals.format(outTicket.purchase_time, 'yyyy-MM-dd HH:mm')}"></span></p>
+</div>
+
+<div th:if="${returnTicket != null}" class="ticket">
+  <h2>Return Ticket</h2>
+  <p><strong>Ticket #:</strong> <span th:text="${returnTicket.ticket_num}"></span></p>
+  <p><strong>Flight #:</strong> <span th:text="${returnTicket.flight_num}"></span></p>
+  <p><strong>Class:</strong> <span th:text="${returnTicket.Uclass}"></span></p>
+  <p><strong>Seat #:</strong> <span th:text="${returnTicket.seat_number}"></span></p>
+  <p><strong>From:</strong> <span th:text="${returnTicket.goingTo}"></span></p>
+  <p><strong>To:</strong> <span th:text="${returnTicket.comingFrom}"></span></p>
+  <p><strong>Booking Fee:</strong> $<span th:text="${returnTicket.bookingFee}"></span></p>
+  <p><strong>Total Fare:</strong> $<span th:text="${returnTicket.total}"></span></p>
+  <p><strong>Purchased:</strong> <span th:text="${#temporals.format(returnTicket.purchase_time, 'yyyy-MM-dd HH:mm')}"></span></p>
+</div>
+
+<div class="actions">
+  <a th:href="@{/logout}">Logout</a>
+</div>
+</body>
+</html>

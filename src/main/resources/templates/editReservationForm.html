@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Reservation – EasyAir</title>
+</head>
+<body>
+<h1>Edit Ticket #[[${ticket.ticket_num}]]</h1>
+<form th:action="@{/rep/edit-reservation}" method="post">
+  <input type="hidden" name="ticketNum" th:value="${ticket.ticket_num}"/>
+
+  <p>
+    <strong>Current flight:</strong> [[${ticket.flight_num}]]
+    → <label>New Flight#: <input type="text" name="newFlightNum" required/></label>
+  </p>
+  <p>
+    <strong>Class:</strong> [[${ticket.Uclass}]]
+    → <label>New Class:
+    <select name="newClass">
+      <option>Economy</option>
+      <option>Business</option>
+      <option>First</option>
+    </select>
+  </label>
+  </p>
+  <button type="submit">Save Changes</button>
+</form>
+<p><a th:href="@{/rep/edit-reservation}">← Choose another ticket</a></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Top Spending Customer – EasyAir Admin</title>
+  <style>
+    body { font-family: sans-serif; background: #eef6fc; text-align: center; padding: 2rem; }
+    .card { display: inline-block; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    h1 { margin-bottom: 1rem; }
+    p { margin: .5rem 0; font-size: 1.1rem; }
+    a.button { display: inline-block; margin-top: 1.5rem; padding: .5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Top Spending Customer</h1>
+  <p><strong>Customer:</strong>
+    <span th:text="${customer.fname} + ' ' + ${customer.lname}">Name</span>
+    (ID: <span th:text="${customer.userID}">0</span>)
+  </p>
+  <p><strong>Total Spent:</strong>
+    $<span th:text="${#numbers.formatDecimal(customer.revenue, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+  </p>
+  <a th:href="@{/admin}" class="button">Back to admin Dashboard</a>
+</div>
+</body>
+</html>

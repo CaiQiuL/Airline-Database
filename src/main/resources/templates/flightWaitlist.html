@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Waiting List – [[${flightNum}]]</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef6fc;
+      padding: 2rem;
+      text-align: center;
+    }
+    table {
+      margin: 1rem auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 600px;
+    }
+    th, td {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+    }
+    th { background: #ddd; }
+    a.button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+<h1>Waiting List for Flight <span th:text="${flightNum}">FL123</span></h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>User ID</th>
+    <th>Joined At</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="w : ${list}">
+    <td th:text="${w.userID}">42</td>
+    <td th:text="${#temporals.format(w.timestamp,'yyyy-MM-dd HH:mm')}">
+      2025-05-09 15:30
+    </td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(list)}">
+    <td colspan="2">No one is on the waiting list for this flight.</td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/rep/flight/manage}" class="button">
+  Back to Flight Management
+</a>
+</body>
+</html>

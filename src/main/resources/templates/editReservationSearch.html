@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Select Reservation – EasyAir</title>
+</head>
+<body>
+<h1>Select a Reservation to Edit</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Ticket#</th><th>UserID</th><th>Flight#</th><th>Class</th><th>Purchased</th><th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="t : ${tickets}">
+    <td th:text="${t.ticket_num}"/>
+    <td th:text="${t.userID}"/>
+    <td th:text="${t.flight_num}"/>
+    <td th:text="${t.Uclass}"/>
+    <td th:text="${#temporals.format(t.purchase_time,'yyyy-MM-dd HH:mm')}"/>
+    <td>
+      <a th:href="@{/rep/edit-reservation(ticketNum=${t.ticket_num})}">
+        Edit
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p><a th:href="@{/repPage}">Back to Dashboard</a></p>
+</body>
+</html>
